@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login with History & Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .login-box, .game-box {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-box.active, .game-box.active {
+      display: flex;
+    }
+
+    .form-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-container label {
+      font-weight: bold;
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 20px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .remember {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-container button {
+      width: 100%;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .form-container button:hover {
+      background: #0056b3;
+    }
+
+    .form-container a {
+      font-size: 14px;
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    .history-box {
+      margin-top: 15px;
+    }
+
+    .history-box ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .history-box li {
+      font-size: 14px;
+      padding: 5px 0;
+    }
+
+    .game-container {
+      text-align: center;
+      color: white;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      width: 100%;
+      height: 100vh;
+      padding: 40px;
+    }
+
+    .game-container h1 {
+      font-size: 40px;
+    }
+
+    .game-container p {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login / Signup Section -->
+  <div class="login-box active" id="loginSection">
+    <div class="form-container">
+      <h2>SIGN UP / LOG IN</h2>
+      <form id="loginForm">
+        <label for="email">Email</label>
+        <input list="email-history" type="email" id="email" placeholder="Email address" required />
+        <datalist id="email-history"></datalist>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Password" required />
+
+        <div class="remember">
+          <label><input type="checkbox" id="rememberMe" /> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <button type="submit">SIGN UP</button>
+      </form>
+
+      <div class="history-box">
+        <h4>Login History:</h4>
+        <ul id="historyList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Section -->
+  <div class="game-box" id="gameSection">
+    <div class="game-container">
+      <h1>🎮 Welcome to the Game Page!</h1>
+      <p>You are successfully signed in.</p>
+      <p>Start Playing Your Game Now!</p>
+      <!-- Add game elements here -->
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const datalist = document.getElementById("email-history");
+    const historyList = document.getElementById("historyList");
+
+    const loginSection = document.getElementById("loginSection");
+    const gameSection = document.getElementById("gameSection");
+
+    // Load history
+    function loadHistory() {
+      const emails = JSON.parse(localStorage.getItem("emailHistory")) || [];
+      datalist.innerHTML = "";
+      historyList.innerHTML = "";
+      emails.forEach(email => {
+        const option = document.createElement("option");
+        option.value = email;
+        datalist.appendChild(option);
+
+        const li = document.createElement("li");
+        li.textContent = email;
+        historyList.appendChild(li);
+      });
+    }
+
+    // Save email to history
+    function saveToHistory(email) {
+      let emails = JSON.parse(localStorage.getItem("emailHistory")) || [];
+      if (!emails.includes(email)) {
+        emails.push(email);
+        localStorage.setItem("emailHistory", JSON.stringify(emails));
+      }
+    }
+
+    // Form submit
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = emailInput.value.trim();
+      const password = document.getElementById("password").value;
+
+      if (email === "" || password === "") {
+        alert("Please fill all fields.");
+        return;
+      }
+
+      if (document.getElementById("rememberMe").checked) {
+        saveToHistory(email);
+      }
+
+      loadHistory();
+
+      // Show game section
+      loginSection.classList.remove("active");
+      gameSection.classList.add("active");
+    });
+
+    // Initialize
+    window.onload = loadHistory;
+  </script>
+
+</body>
+</html>
