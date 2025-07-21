@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login Page</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .options a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    button {
+      width: 100%;
+      background: #007bff;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>LOG IN</h2>
+    <form onsubmit="return login()">
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required />
+
+      <div class="options">
+        <label><input type="checkbox" id="remember" /> Remember me</label>
+        <a href="#">Forgot password?</a>
+      </div>
+
+      <button type="submit">LOG IN</button>
+    </form>
+  </div>
+
+  <script>
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      // Simple fake check (optional: replace with actual check logic)
+      if (email && password) {
+        // Save to browser localStorage if "Remember me" is checked
+        if (document.getElementById("remember").checked) {
+          localStorage.setItem("email", email);
+        }
+
+        // Redirect to game page
+        window.location.href = "game.html";
+        return false; // prevent default form submit
+      } else {
+        alert("Invalid email or password");
+        return false;
+      }
+    }
+  </script>
+</body>
+      </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 20px;
+    }
+
+    .email {
+      font-weight: bold;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 Welcome to the Game Page!</h1>
+  <p>You have successfully logged in!</p>
+  <p class="email"></p>
+
+  <script>
+    // Show stored email from localStorage
+    const savedEmail = localStorage.getItem("email");
+    if (savedEmail) {
+      document.querySelector(".email").textContent = `Logged in as: ${savedEmail}`;
+    }
+  </script>
+</body>
+</html>
+
+      
