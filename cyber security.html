@@ -1,0 +1,121 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #141e30, #243b55);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+    }
+    .container {
+      background: rgba(0,0,0,0.6);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #000;
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 6px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      border: none;
+      background-color: #00c6ff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    button:hover {
+      background-color: #0072ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sign Up</h2>
+    <input type="email" id="email" placeholder="Enter your Email" required />
+    <input type="password" id="password" placeholder="Enter Password" required />
+    <button onclick="signup()">Sign Up</button>
+  </div>
+
+  <script>
+    function signup() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!email || !password) {
+        alert('Email or Password cannot be empty!');
+        return;
+      }
+
+      if (password.length < 4) {
+        alert('Password must be at least 4 characters long.');
+        return;
+      }
+
+      // Store email in local storage for history
+      localStorage.setItem('user_email', email);
+
+      // Redirect to game page
+      window.location.href = 'game.html';
+    }
+  </script>
+</body>
+</html>
+
+<!-- game.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 Welcome to the Game Page!</h1>
+  <p>You have successfully signed up!</p>
+  <p>Email saved in history: <span id="userEmail"></span></p>
+
+  <script>
+    const savedEmail = localStorage.getItem('user_email');
+    document.getElementById('userEmail').innerText = savedEmail || 'No email found';
+  </script>
+</body>
+</html>
